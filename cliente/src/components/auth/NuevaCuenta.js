@@ -1,7 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import authContext from '../../context/auth/authContext';
+import alertaContext from '../../context/alertas/alertaContext';
 
-const NuevaCuenta = () => {
+const NuevaCuenta = (props) => {
+
+    const alertasContext = useContext(alertaContext);
+    const { alerta, mostrarAlerta } = alertasContext;
+
+    const authsContext = useContext(authContext);
+    const { mensaje, autenticado, registrarUsuario } = authsContext;
+
+    useEffect(() => {
+        if (autenticado) {
+            props.history.push('/proyectos');
+        }
+
+        if (mensaje) {
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+
+    }, [mensaje, autenticado, props.history]);
 
     const [usuario, setUsuario] = useState({
         email: '',
@@ -20,16 +39,31 @@ const NuevaCuenta = () => {
         e.preventDefault();
 
         //VALIDAR QUE NO HAYA AMPOS VACIOS
-
+        if (email.trim() === '' || nombre.trim() === '' || password.trim() === '' || confirmar.trim() === '') {
+            mostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+            return;
+        }
         //PASSWORD DE 6 CARACTERES
+        if (password.length < 6) {
+            mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error');
+            return;
+        }
 
         //LOS DOS PASSWORD SON IGUALES
+        if (password !== confirmar) {
+            mostrarAlerta('Las contraseñas no coinciden', 'alerta-error');
+            return;
+        }
 
         //PASARLO AL ACTION
+        registrarUsuario({ nombre, email, password });
     }
 
     return (
         <div className='form-usuario'>
+
+            {alerta ? <div className={`alerta ${alerta.categoria}`} >{alerta.msg}</div> : null}
+
             <div className='contenedor-form sombra-dark'>
                 <h1>Obtener una Cuenta</h1>
 
