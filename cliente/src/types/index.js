@@ -13,3 +13,6 @@ export const ESTADO_TAREA = 'ESTADO_TAREA';
 export const TAREA_ACTUAL = 'TAREA_ACTUAL';
 export const ERROR_TAREA = 'ERROR_TAREA';
 
+export const MOSTRAR_ALERTA = 'MOSTRAR_ALERTA';
+export const OCULTAR_ALERTA = 'OCULTAR_ALERTA';
+

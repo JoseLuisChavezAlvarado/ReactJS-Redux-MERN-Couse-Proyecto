@@ -18,6 +18,14 @@ const NuevaCuenta = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        //VALIDAR QUE NO HAYA AMPOS VACIOS
+
+        //PASSWORD DE 6 CARACTERES
+
+        //LOS DOS PASSWORD SON IGUALES
+
+        //PASARLO AL ACTION
     }
 
     return (
