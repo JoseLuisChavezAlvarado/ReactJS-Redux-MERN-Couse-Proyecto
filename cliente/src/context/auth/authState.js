@@ -10,9 +10,9 @@ const AuthState = props => {
     const initialState = {
         token: localStorage.getItem('token'),
         autenticado: null,
+        cargando: true,
         usuario: null,
-        mensaje: null,
-        cargando: true
+        mensaje: null
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -45,7 +45,6 @@ const AuthState = props => {
     const usuarioAutenticado = async () => {
         const token = localStorage.getItem('token');
         if (token) {
-            //FUNCION PARA ENVIAR EL TOKEN POR HEADERS
             tokenAuth(token);
         }
 
